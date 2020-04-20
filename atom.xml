@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Nicolas Anjoran</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://nanjoran.com/"/>
+  <updated>2020-04-20T15:40:32.327Z</updated>
+  <id>https://nanjoran.com/</id>
+  
+  <author>
+    <name>Nicolas Anjoran</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MicroK8s with Nginx ingress and cert-manager</title>
+    <link href="https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/"/>
+    <id>https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/</id>
+    <published>2020-04-20T12:17:33.000Z</published>
+    <updated>2020-04-20T15:40:32.327Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Setting-up-MicroK8s&quot;&gt;&lt;a href=&quot;#Setting-up-MicroK8s&quot; class=&quot;headerlink&quot; title=&quot;Setting up MicroK8s&quot;&gt;&lt;/a&gt;Setting up MicroK8s&lt;/h2&gt;&lt;h3
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Create a markdown blog in 10min using Hexo (Part 1)</title>
+    <link href="https://nanjoran.com/2019/07/25/markdown-blog-1/"/>
+    <id>https://nanjoran.com/2019/07/25/markdown-blog-1/</id>
+    <published>2019-07-25T10:06:49.000Z</published>
+    <updated>2020-04-20T12:12:53.807Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Like a lot of people, I’ve always wanted to create a blog and start writing, but never had “enough time”… 😴&lt;/p&gt;
+&lt;p&gt;Yesterday, an idea
+        
+      
+    
+    </summary>
+    
+      <category term="Web" scheme="https://nanjoran.com/categories/Web/"/>
+    
+    
+      <category term="blog" scheme="https://nanjoran.com/tags/blog/"/>
+    
+      <category term="blogging" scheme="https://nanjoran.com/tags/blogging/"/>
+    
+      <category term="writing" scheme="https://nanjoran.com/tags/writing/"/>
+    
+      <category term="markdown" scheme="https://nanjoran.com/tags/markdown/"/>
+    
+      <category term="github" scheme="https://nanjoran.com/tags/github/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Like a lot of people, I’ve always wanted to create a blog and start writing, but never had “enough time”… 😴 Yesterday, an idea came to me: I’m a developer, I use Markdown every day to take notes and">
+<meta name="keywords" content="blog,blogging,writing,markdown,github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Create a markdown blog in 10min using Hexo (Part 1)">
+<meta property="og:url" content="https://nanjoran.com/2019/07/25/markdown-blog-1/index.html">
+<meta property="og:site_name" content="Nicolas Anjoran">
+<meta property="og:description" content="Like a lot of people, I’ve always wanted to create a blog and start writing, but never had “enough time”… 😴 Yesterday, an idea came to me: I’m a developer, I use Markdown every day to take notes and">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://nanjoran.com/images/posts/blogging-md/vscode.png">
+<meta property="og:image" content="https://nanjoran.com/images/posts/blogging-md/hexo-page.png">
+<meta property="og:updated_time" content="2020-04-20T12:12:53.807Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Create a markdown blog in 10min using Hexo (Part 1)">
+<meta name="twitter:description" content="Like a lot of people, I’ve always wanted to create a blog and start writing, but never had “enough time”… 😴 Yesterday, an idea came to me: I’m a developer, I use Markdown every day to take notes and">
+<meta name="twitter:image" content="https://nanjoran.com/images/posts/blogging-md/vscode.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Create a markdown blog in 10min using Hexo (Part 1)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nanjoran.com/2019/07/25/markdown-blog-1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&text=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&is_video=false&description=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Create a markdown blog in 10min using Hexo (Part 1)&body=Check out this article: https://nanjoran.com/2019/07/25/markdown-blog-1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&name=Create a markdown blog in 10min using Hexo (Part 1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-markdown-MD"><span class="toc-number">1.</span> <span class="toc-text">Why markdown (MD)?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Create-a-blog-with-Hexo"><span class="toc-number">2.</span> <span class="toc-text">Create a blog with Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo"><span class="toc-number">2.1.</span> <span class="toc-text">Hexo?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-Hexo-and-start-it"><span class="toc-number">2.2.</span> <span class="toc-text">Install Hexo and start it</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Customize-our-blog"><span class="toc-number">3.</span> <span class="toc-text">Customize our blog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Themes"><span class="toc-number">3.1.</span> <span class="toc-text">Themes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-draft-or-a-post"><span class="toc-number">3.2.</span> <span class="toc-text">Create a draft or a post</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy-the-blog-on-GitHub-pages"><span class="toc-number">4.</span> <span class="toc-text">Deploy the blog on GitHub pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-key"><span class="toc-number">4.1.</span> <span class="toc-text">Deploy key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Test-our-GitHub-page"><span class="toc-number">4.2.</span> <span class="toc-text">Test our GitHub page</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Update-our-config-file"><span class="toc-number">4.3.</span> <span class="toc-text">Update our config file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy"><span class="toc-number">4.4.</span> <span class="toc-text">Deploy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What’s-next"><span class="toc-number">5.</span> <span class="toc-text">What’s next?</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Create a markdown blog in 10min using Hexo (Part 1)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Nicolas Anjoran</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-07-25T10:06:49.000Z" itemprop="datePublished">2019-07-25</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Web/">Web</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/blog/">blog</a>, <a class="tag-link" href="/tags/blogging/">blogging</a>, <a class="tag-link" href="/tags/github/">github</a>, <a class="tag-link" href="/tags/markdown/">markdown</a>, <a class="tag-link" href="/tags/writing/">writing</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Like a lot of people, I’ve always wanted to create a blog and start writing, but never had “enough time”… 😴</p>
+<p>Yesterday, an idea came to me: I’m a developer, I use Markdown every day to take notes and create documentations for things I develop/build. Why wouldn’t I use markdown to write a blog?</p>
+<p>In this article, which is my first blog post, I’ll explain how I built and deployed this article… ⚠️ Infinite loop ⚠️</p>
+<h2 id="Why-markdown-MD"><a href="#Why-markdown-MD" class="headerlink" title="Why markdown (MD)?"></a>Why markdown (MD)?</h2><p>First, let’s talk about <a href="https://en.wikipedia.org/wiki/Markdown" target="_blank" rel="noopener">Markdown</a>, what it is, and why I decided to use it.</p>
+<p>Markdown is a lightweight but powerful markup language. It’s really easy to write and format plain text articles/documentation, thanks to its simple formatting syntax. You just need to “mark” your text with symbols like hashtags, wildcards, bracket symbols to create titles, lists, hyperlinks…</p>
+<p>For non-developers, following is a small example of some text, formatted with markdown.</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># "#" means this is a level-1 title</span></span><br><span class="line"><span class="section">## "##" means this is a level-2 title</span></span><br><span class="line">here goes a paragraph...</span><br></pre></td></tr></table></figure>
+
+<p>Here is a link to a useful markdown cheatsheet: <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank" rel="noopener">https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet</a></p>
+<p><img src="/images/posts/blogging-md/vscode.png" alt="VS Code" title="Editing a blog article on VS Code"></p>
+<p>To write, edit and preview my markdown files (.md), I use <a href="https://code.visualstudio.com" target="_blank" rel="noopener">Visual Studio Code</a>. I also develop some of my apps with VS code, which is very convenient.</p>
+<h2 id="Create-a-blog-with-Hexo"><a href="#Create-a-blog-with-Hexo" class="headerlink" title="Create a blog with Hexo"></a>Create a blog with Hexo</h2><h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo?"></a>Hexo?</h3><p>When this idea came to me, I was super excited about developing an app that would generate some blog posts for me from markdown files. But wait… Let’s search for “Markdown blog” on Google first 🧐</p>
+<p>Here you go! 2nd result on Google: <a href="https://hexo.io" target="_blank" rel="noopener">Hexo.io</a>, “A fast, simple &amp; powerful blog framework”.</p>
+<p><img src="/images/posts/blogging-md/hexo-page.png" alt="Hexo website screenshot" title="Hexo website screenshot"></p>
+<p>All right, I don’t need to develop it and the good news are it’s an <a href="https://www.npmjs.com" target="_blank" rel="noopener">npm</a> module! All the keywords I was searching for are on this page: Markdown, NPM, Easy Deployment. I already love it 😎</p>
+<h3 id="Install-Hexo-and-start-it"><a href="#Install-Hexo-and-start-it" class="headerlink" title="Install Hexo and start it"></a>Install Hexo and start it</h3><p>I assume you already have <a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js and NPM installed</a>.</p>
+<p>Let’s run the commands <a href="https://hexo.io" target="_blank" rel="noopener">hexo.io</a> tells us to run.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g <span class="comment"># add "sudo" if required</span></span><br><span class="line">hexo init blog <span class="comment"># rename "blog" with your blog name, mine was nanblog</span></span><br><span class="line"><span class="built_in">cd</span> blog <span class="comment"># go to the directory</span></span><br><span class="line">npm install <span class="comment"># install the npm packages/dependencies</span></span><br><span class="line">hexo server <span class="comment"># start a local webserver</span></span><br></pre></td></tr></table></figure>
+
+<p>Great! We’ve just created our blog 🎉, let’s configure it now.</p>
+<h2 id="Customize-our-blog"><a href="#Customize-our-blog" class="headerlink" title="Customize our blog"></a>Customize our blog</h2><p>The file <strong>_config.yml</strong> contains some parameters for our blog, as the name suggests.</p>
+<h3 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h3><p>Let’s be honest, the default theme is… not the most beautiful theme I’ve ever seen 🤢</p>
+<p>Got to <a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a> and download the theme of your choice into the “themes” folder. For instance, I’ve downloaded the <a href="https://github.com/probberechts/hexo-theme-cactus" target="_blank" rel="noopener">Cactus theme</a> under themes/cactus.</p>
+<p>Then, I just had to edit the <strong>_config.yml</strong> file to select <strong>cactus</strong> as my theme.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">cactus</span></span><br></pre></td></tr></table></figure>
+
+<p>Don’t forget to read the README file of the theme you’ve downloaded, you’ll probably need to configure the theme’s <strong>_config.yml</strong> file.</p>
+<h3 id="Create-a-draft-or-a-post"><a href="#Create-a-draft-or-a-post" class="headerlink" title="Create a draft or a post"></a>Create a draft or a post</h3><p>To create a new post, hexo offers some simple commands:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a new draft</span></span><br><span class="line">hexo new draft <span class="string">"my new draft post"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># create a new post</span></span><br><span class="line">hexo new post <span class="string">"my new post"</span></span><br></pre></td></tr></table></figure>
+
+<p>The difference between a draft and a post is quite obvious, a post will be immediately published, a draft won’t. </p>
+<p>Then, just open the source/_posts/my-new-post.md file and edit your markdown post.</p>
+<p>Once you’ve written a draft and it’s ready to go live, all you need to do is to run the following command:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a new draft</span></span><br><span class="line">hexo publish my-new-post.md <span class="comment"># my-new-post is the name of your draft file.</span></span><br></pre></td></tr></table></figure>
+
+<p>It will automatically convert the draft to a post, ready to be published 😀</p>
+<p>You don’t necessarily need to create a draft before promoting it as a post if you plan to publish it immediately. But I guess it’s a best practice.</p>
+<p>Note that you won’t be able to see your drafts in the local website served by our local server. To see it locally, you need to add one more option to the <strong>server</strong> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server --draft</span><br></pre></td></tr></table></figure>
+
+<h2 id="Deploy-the-blog-on-GitHub-pages"><a href="#Deploy-the-blog-on-GitHub-pages" class="headerlink" title="Deploy the blog on GitHub pages"></a>Deploy the blog on GitHub pages</h2><p><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub pages</a> is a simple way to host a basic (static) website for free. No database needed.</p>
+<p>First, create a new repository on GitHub, name it <strong>“yourusername.github.io”</strong>. For example, mine was <strong>nicolasanjoran.github.io</strong>. Make sure it’s a public repository.</p>
+<h3 id="Deploy-key"><a href="#Deploy-key" class="headerlink" title="Deploy key"></a>Deploy key</h3><p>You’ll also need to create a “Deploy key” to be able to deploy the generated code to GitHub. You can skip this step if you already use GitHub and already have some SSH keys setup on your GitHub account. Following are the basic steps, please go to the <a href="https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys" target="_blank" rel="noopener">GitHub Help</a> for more details.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Generate a new SSH key</span></span><br><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"your_email@example.com"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Start the SSH key to the ssh-agent</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">"<span class="variable">$(ssh-agent -s)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Add the key to the agent</span></span><br><span class="line">ssh-add -K ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>GitHub also warns us: </p>
+<blockquote>
+<p>If you’re using macOS Sierra 10.12.2 or later, you will need to modify your ~/.ssh/config file to automatically load keys into the ssh-agent and store passphrases in your keychain.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">  AddKeysToAgent yes</span><br><span class="line">  UseKeychain yes</span><br><span class="line">  IdentityFile ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>Then, copy/paste the contents of the generated key in the GitHub deployment keys section.</p>
+<h3 id="Test-our-GitHub-page"><a href="#Test-our-GitHub-page" class="headerlink" title="Test our GitHub page"></a>Test our GitHub page</h3><p>Before deploying my blog to GitHub pages, I’ve just uploaded a very simple “Hello world” HTML page to the repository and just opened <a href="http://yourusernamegithub.io" target="_blank" rel="noopener">http://yourusernamegithub.io</a> to check that the URL points to my GitHub repository 👌.</p>
+<h3 id="Update-our-config-file"><a href="#Update-our-config-file" class="headerlink" title="Update our config file"></a>Update our config file</h3><p>To get our blog deployed on GitHub pages, we need to update our _config file, just add the following yaml parameters to the <strong>_config.yml</strong> file.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">git@github.com:yourusername/yourusername.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br><span class="line"><span class="attr">  message:</span> <span class="string">"Site updated: <span class="template-variable">&#123;&#123; now('YYYY-MM-DD HH:mm:ss') &#125;&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Deploy"><a href="#Deploy" class="headerlink" title="Deploy"></a>Deploy</h3><p>Hexo offers multiple deployment systems, I decided to deploy my blog on GitHub, bug you can deploy yours on Heroku or even using Netlify or Rsync… See the full list of deployment types <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">here</a>.</p>
+<p>To use the git deployment, we need to install the <strong>hexo-deployer-git</strong> module.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>Once it’s installed, we will deploy our blog. The hexo-deployer-git will create a commit with the message we’ve specified in the config file. This commit will be automatically created and pushed on GitHub using the <strong>deploy</strong> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Generate static files</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># Deploy the blog</span></span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>Let’s Go! Our blog is now up and running at <a href="http://yourusername.github.io" target="_blank" rel="noopener">http://yourusername.github.io</a> 😎🥳</p>
+<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next?"></a>What’s next?</h2><ul>
+<li>Add a custom domain, instead of the .github.io domain.</li>
+<li>Setup a live-reload server locally</li>
+<li>Use multiple git branches to manage our blog</li>
+<li>Maybe, customize the theme</li>
+</ul>
+<p>I’ll upload a part 2 of this article to cover at least some of those topics! 🤗</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-markdown-MD"><span class="toc-number">1.</span> <span class="toc-text">Why markdown (MD)?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Create-a-blog-with-Hexo"><span class="toc-number">2.</span> <span class="toc-text">Create a blog with Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo"><span class="toc-number">2.1.</span> <span class="toc-text">Hexo?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-Hexo-and-start-it"><span class="toc-number">2.2.</span> <span class="toc-text">Install Hexo and start it</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Customize-our-blog"><span class="toc-number">3.</span> <span class="toc-text">Customize our blog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Themes"><span class="toc-number">3.1.</span> <span class="toc-text">Themes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-draft-or-a-post"><span class="toc-number">3.2.</span> <span class="toc-text">Create a draft or a post</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy-the-blog-on-GitHub-pages"><span class="toc-number">4.</span> <span class="toc-text">Deploy the blog on GitHub pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-key"><span class="toc-number">4.1.</span> <span class="toc-text">Deploy key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Test-our-GitHub-page"><span class="toc-number">4.2.</span> <span class="toc-text">Test our GitHub page</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Update-our-config-file"><span class="toc-number">4.3.</span> <span class="toc-text">Update our config file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy"><span class="toc-number">4.4.</span> <span class="toc-text">Deploy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What’s-next"><span class="toc-number">5.</span> <span class="toc-text">What’s next?</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nanjoran.com/2019/07/25/markdown-blog-1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&text=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&is_video=false&description=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Create a markdown blog in 10min using Hexo (Part 1)&body=Check out this article: https://nanjoran.com/2019/07/25/markdown-blog-1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&name=Create a markdown blog in 10min using Hexo (Part 1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Nicolas Anjoran
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
