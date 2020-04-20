@@ -21,6 +21,7 @@
 <meta name="twitter:title" content="Create a markdown blog in 10min using Hexo (Part 1)">
 <meta name="twitter:description" content="Like a lot of people, I’ve always wanted to create a blog and start writing, but never had “enough time”… 😴 Yesterday, an idea came to me: I’m a developer, I use Markdown every day to take notes and">
 <meta name="twitter:image" content="https://nanjoran.com/images/posts/blogging-md/vscode.png">
+<meta name="twitter:creator" content="@nicolasanjoran">
     
     
         
@@ -50,6 +51,8 @@
     <!-- rss -->
     
     
+      <link rel="alternate" href="/atom.xml" title="Nicolas Anjoran" type="application/atom+xml">
+    
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -64,11 +67,9 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/about">About</a></li>
          
           <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/projects_url">Projects</a></li>
         
       </ul>
     </span>
@@ -100,6 +101,7 @@
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&name=Create a markdown blog in 10min using Hexo (Part 1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nanjoran.com/2019/07/25/markdown-blog-1/&t=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -239,11 +241,9 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/about">About</a></li>
          
           <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/projects_url">Projects</a></li>
         
       </ul>
     </div>
@@ -264,6 +264,7 @@
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&title=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2019/07/25/markdown-blog-1/&name=Create a markdown blog in 10min using Hexo (Part 1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nanjoran.com/2019/07/25/markdown-blog-1/&t=Create a markdown blog in 10min using Hexo (Part 1)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -281,7 +282,11 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 Nicolas Anjoran
+    Copyright &copy;
+    
+    
+    2016-2020
+    Nicolas Anjoran
   </div>
   <div class="footer-right">
     <nav>
@@ -289,11 +294,9 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/about">About</a></li>
          
           <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/projects_url">Projects</a></li>
         
       </ul>
     </nav>
@@ -308,6 +311,29 @@
     <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
 <script src="/js/main.js"></script>
 <!-- search -->
 
