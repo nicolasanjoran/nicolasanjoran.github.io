@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nanjoran.com/"/>
-  <updated>2020-04-21T10:18:57.513Z</updated>
+  <updated>2020-04-22T10:01:13.010Z</updated>
   <id>https://nanjoran.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MicroK8s - Use multiple namespaces and contexts</title>
+    <link href="https://nanjoran.com/2020/04/22/MicroK8s-Use-multiple-namespaces-and-contexts/"/>
+    <id>https://nanjoran.com/2020/04/22/MicroK8s-Use-multiple-namespaces-and-contexts/</id>
+    <published>2020-04-22T10:01:12.000Z</published>
+    <updated>2020-04-22T10:01:13.010Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Kubernetes is a powerful tool to host and orchestrate containerized backend solutions for production. What about our staging
+        
+      
+    
+    </summary>
+    
+      <category term="Backend" scheme="https://nanjoran.com/categories/Backend/"/>
+    
+    
+      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
+    
+      <category term="kubernetes" scheme="https://nanjoran.com/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>MicroK8s - Mount host directory into pods</title>
@@ -83,7 +111,7 @@
     <link href="https://nanjoran.com/2019/07/25/markdown-blog-1/"/>
     <id>https://nanjoran.com/2019/07/25/markdown-blog-1/</id>
     <published>2019-07-25T10:06:49.000Z</published>
-    <updated>2020-04-20T12:12:53.807Z</updated>
+    <updated>2020-04-22T09:39:58.970Z</updated>
     
     <summary type="html">
     
