@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nanjoran.com/"/>
-  <updated>2020-04-22T10:01:13.010Z</updated>
+  <updated>2020-04-22T12:46:36.138Z</updated>
   <id>https://nanjoran.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes - Ingress controller with Cloudflare</title>
+    <link href="https://nanjoran.com/2020/04/22/Kubernetes-Ingress-controller-with-Cloudflare/"/>
+    <id>https://nanjoran.com/2020/04/22/Kubernetes-Ingress-controller-with-Cloudflare/</id>
+    <published>2020-04-22T12:10:01.000Z</published>
+    <updated>2020-04-22T12:46:36.138Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/images/posts/ingress-cloudflare/cloudflare-tls.png&quot; alt=&quot;Cloudflare TLS&quot; title=&quot;Cloudflare TLS schema&quot;&gt;&lt;br&gt;Cloudflare allows
+        
+      
+    
+    </summary>
+    
+      <category term="Backend" scheme="https://nanjoran.com/categories/Backend/"/>
+    
+    
+      <category term="cloudflare" scheme="https://nanjoran.com/tags/cloudflare/"/>
+    
+      <category term="kubernetes" scheme="https://nanjoran.com/tags/kubernetes/"/>
+    
+      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
+    
+  </entry>
   
   <entry>
     <title>MicroK8s - Use multiple namespaces and contexts</title>
@@ -38,9 +68,9 @@
       <category term="Backend" scheme="https://nanjoran.com/categories/Backend/"/>
     
     
-      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
-    
       <category term="kubernetes" scheme="https://nanjoran.com/tags/kubernetes/"/>
+    
+      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
     
   </entry>
   
@@ -66,9 +96,9 @@
       <category term="Backend" scheme="https://nanjoran.com/categories/Backend/"/>
     
     
-      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
-    
       <category term="kubernetes" scheme="https://nanjoran.com/tags/kubernetes/"/>
+    
+      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
     
       <category term="docker" scheme="https://nanjoran.com/tags/docker/"/>
     
@@ -96,9 +126,9 @@
       <category term="Backend" scheme="https://nanjoran.com/categories/Backend/"/>
     
     
-      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
-    
       <category term="kubernetes" scheme="https://nanjoran.com/tags/kubernetes/"/>
+    
+      <category term="microK8s" scheme="https://nanjoran.com/tags/microK8s/"/>
     
       <category term="ingress" scheme="https://nanjoran.com/tags/ingress/"/>
     
