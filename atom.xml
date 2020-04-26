@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nanjoran.com/"/>
-  <updated>2020-04-22T12:46:36.138Z</updated>
+  <updated>2020-04-26T10:09:53.024Z</updated>
   <id>https://nanjoran.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://nanjoran.com/2020/04/22/Kubernetes-Ingress-controller-with-Cloudflare/"/>
     <id>https://nanjoran.com/2020/04/22/Kubernetes-Ingress-controller-with-Cloudflare/</id>
     <published>2020-04-22T12:10:01.000Z</published>
-    <updated>2020-04-22T12:46:36.138Z</updated>
+    <updated>2020-04-26T10:09:53.024Z</updated>
     
     <summary type="html">
     
@@ -79,7 +79,7 @@
     <link href="https://nanjoran.com/2020/04/21/MicroK8s-Mount-host-directory-into-pods/"/>
     <id>https://nanjoran.com/2020/04/21/MicroK8s-Mount-host-directory-into-pods/</id>
     <published>2020-04-21T10:18:57.000Z</published>
-    <updated>2020-04-21T10:18:57.513Z</updated>
+    <updated>2020-04-26T10:04:30.771Z</updated>
     
     <summary type="html">
     
@@ -109,7 +109,7 @@
     <link href="https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/"/>
     <id>https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/</id>
     <published>2020-04-20T12:17:33.000Z</published>
-    <updated>2020-04-26T10:00:37.220Z</updated>
+    <updated>2020-04-26T10:02:25.380Z</updated>
     
     <summary type="html">
     

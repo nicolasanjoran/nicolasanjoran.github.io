@@ -15,7 +15,8 @@
 <meta property="og:description" content="Cloudflare allows us to hide our server IPs, cache our static assets, protect the servers them from some attacks. To do that, they offer a Proxy service for free. First stepsIngress controllerFor this">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://nanjoran.com/images/posts/ingress-cloudflare/cloudflare-tls.png">
-<meta property="og:updated_time" content="2020-04-22T12:46:36.138Z">
+<meta property="og:image" content="https://www.vultr.com/media/banners/banner_728x90.png">
+<meta property="og:updated_time" content="2020-04-26T10:09:53.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes - Ingress controller with Cloudflare">
 <meta name="twitter:description" content="Cloudflare allows us to hide our server IPs, cache our static assets, protect the servers them from some attacks. To do that, they offer a Proxy service for free. First stepsIngress controllerFor this">
@@ -131,7 +132,7 @@
       
         <time datetime="2020-04-22T12:10:01.000Z" itemprop="datePublished">2020-04-22</time>
         
-        (Updated: <time datetime="2020-04-22T12:46:36.138Z" itemprop="dateModified">2020-04-22</time>)
+        (Updated: <time datetime="2020-04-26T10:09:53.024Z" itemprop="dateModified">2020-04-26</time>)
         
       
     </div>
@@ -158,6 +159,8 @@
   <div class="content" itemprop="articleBody">
     <p><img src="/images/posts/ingress-cloudflare/cloudflare-tls.png" alt="Cloudflare TLS" title="Cloudflare TLS schema"><br>Cloudflare allows us to hide our server IPs, cache our static assets, protect the servers them from some attacks. To do that, they offer a Proxy service for free.</p>
 <h1 id="First-steps"><a href="#First-steps" class="headerlink" title="First steps"></a>First steps</h1><h2 id="Ingress-controller"><a href="#Ingress-controller" class="headerlink" title="Ingress controller"></a>Ingress controller</h2><p>For this article, I consider that we already have an ingress controller in our kubernetes cluster. For instance, my microk8s cluster uses the default nginx controller, which can be installed with the command <code>microk8s.enable ingress</code>.</p>
+<p>FYI, microk8s is a simple kubernetes solution developed by Canonical. It’s powerful and easy to deploy. I deployed mine on a single <a href="https://www.vultr.com/?ref=8553262" target="_blank" rel="noopener">Vultr VPS instance</a>, for example.</p>
+<p><a href="https://www.vultr.com/?ref=8553262" target="_blank" rel="noopener"><img src="https://www.vultr.com/media/banners/banner_728x90.png" width="728" height="90"></a></p>
 <h2 id="Cloudflare"><a href="#Cloudflare" class="headerlink" title="Cloudflare"></a>Cloudflare</h2><p>First, sign-up to Cloudflare, their website will guide you through this setup.<br>If you haven’t any record on your DNS, try to add an A record that points to your own server (mine points to my microk8s cluster).</p>
 <h1 id="Setup-the-encryption"><a href="#Setup-the-encryption" class="headerlink" title="Setup the encryption"></a>Setup the encryption</h1><p>Cloudflare will automatically create a TLS certificate for connections between the end users and Cloudflare. But we need to setup the encryption between Cloudflare and our servers. It’s optional, but highly recommended. AND, <strong>it’s way easier to use this method, than using Let’s encrypt with certbot on our kubernetes cluster.</strong></p>
 <h2 id="Generate-some-certificates"><a href="#Generate-some-certificates" class="headerlink" title="Generate some certificates"></a>Generate some certificates</h2><p>Follow <a href="https://support.cloudflare.com/hc/en-us/articles/115000479507-Managing-Cloudflare-Origin-CA-certificates" target="_blank" rel="noopener">this guide</a> to create a new “Cloudflare origin CA certificate”.</p>

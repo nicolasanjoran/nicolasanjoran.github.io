@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Nicolas Anjoran">
 <meta property="og:description" content="Why would I need it?As I mainly want to use Kubernetes to orchestrate my containers, I don’t use multiple nodes. I consider that paying for an external storage solution while I have enough disk space">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-21T10:18:57.513Z">
+<meta property="og:updated_time" content="2020-04-26T10:04:30.771Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MicroK8s - Mount host directory into pods">
 <meta name="twitter:description" content="Why would I need it?As I mainly want to use Kubernetes to orchestrate my containers, I don’t use multiple nodes. I consider that paying for an external storage solution while I have enough disk space">
@@ -131,7 +131,7 @@
       
         <time datetime="2020-04-21T10:18:57.000Z" itemprop="datePublished">2020-04-21</time>
         
-        (Updated: <time datetime="2020-04-21T10:18:57.513Z" itemprop="dateModified">2020-04-21</time>)
+        (Updated: <time datetime="2020-04-26T10:04:30.771Z" itemprop="dateModified">2020-04-26</time>)
         
       
     </div>
@@ -156,7 +156,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="Why-would-I-need-it"><a href="#Why-would-I-need-it" class="headerlink" title="Why would I need it?"></a>Why would I need it?</h2><p>As I mainly want to use Kubernetes to orchestrate my containers, I don’t use multiple nodes. I consider that paying for an external storage solution while I have enough disk space on the host machine is wasting money. </p>
+    <h2 id="Why-would-I-need-it"><a href="#Why-would-I-need-it" class="headerlink" title="Why would I need it?"></a>Why would I need it?</h2><p>As I mainly want to use Kubernetes to orchestrate my containers, I don’t use multiple nodes. I consider that paying for an external storage solution while I have enough disk space on the host machine is wasting money. I host my Kubernetes cluster on a <a href="https://www.vultr.com/?ref=8553262" target="_blank" rel="noopener">Vultr VPS</a>.</p>
 <p>Note that I could have done it with Docker compose to, but I prefer K8s. Using K8s also allows me to quickly change my cluster to a multi-node cluster if I decide to. Also, managing multiple projects on the same cluster with namespaces and multiple yaml files is easier.</p>
 <h2 id="Let’s-do-it"><a href="#Let’s-do-it" class="headerlink" title="Let’s do it"></a>Let’s do it</h2><p>The official documentation is <a href="https://kubernetes.io/docs/concepts/storage/volumes/#hostpath" target="_blank" rel="noopener">available here</a>.</p>
 <p>Here is a basic deployment file with the HostPath volume.</p>
