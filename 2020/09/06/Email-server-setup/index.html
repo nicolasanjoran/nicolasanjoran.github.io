@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="DisclaimerThis post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably the best way to do it. It’s more like a note I wrote if I need to setup a new one">
+    <meta name="description" content="DisclaimerThis post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably not the best way to do it. It’s more like a note I wrote if I need to setup a new">
 <meta property="og:type" content="article">
 <meta property="og:title" content="I built my own send-only email API, it&#39;s not that hard.">
 <meta property="og:url" content="https://nanjoran.com/2020/09/06/Email-server-setup/index.html">
 <meta property="og:site_name" content="Nicolas Anjoran">
-<meta property="og:description" content="DisclaimerThis post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably the best way to do it. It’s more like a note I wrote if I need to setup a new one">
+<meta property="og:description" content="DisclaimerThis post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably not the best way to do it. It’s more like a note I wrote if I need to setup a new">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-09-07T09:00:52.177Z">
+<meta property="og:updated_time" content="2021-06-26T14:34:02.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="I built my own send-only email API, it&#39;s not that hard.">
-<meta name="twitter:description" content="DisclaimerThis post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably the best way to do it. It’s more like a note I wrote if I need to setup a new one">
+<meta name="twitter:description" content="DisclaimerThis post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably not the best way to do it. It’s more like a note I wrote if I need to setup a new">
 <meta name="twitter:creator" content="@nicolasanjoran">
     
     
@@ -128,7 +128,7 @@
       
         <time datetime="2020-09-06T14:15:39.000Z" itemprop="datePublished">2020-09-06</time>
         
-        (Updated: <time datetime="2020-09-07T09:00:52.177Z" itemprop="dateModified">2020-09-07</time>)
+        (Updated: <time datetime="2021-06-26T14:34:02.470Z" itemprop="dateModified">2021-06-26</time>)
         
       
     </div>
@@ -143,7 +143,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="Disclaimer"><a href="#Disclaimer" class="headerlink" title="Disclaimer"></a>Disclaimer</h1><p>This post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably the best way to do it. It’s more like a note I wrote if I need to setup a new one later on.</p>
+    <h1 id="Disclaimer"><a href="#Disclaimer" class="headerlink" title="Disclaimer"></a>Disclaimer</h1><p>This post will relate how I managed to setup my own send-only email server. I’m not an expert, it’s probably not the best way to do it. It’s more like a note I wrote if I need to setup a new one later on.</p>
 <h1 id="💻-Server-setup"><a href="#💻-Server-setup" class="headerlink" title="💻 Server setup"></a>💻 Server setup</h1><h2 id="System-setup"><a href="#System-setup" class="headerlink" title="System setup"></a>System setup</h2><p>I decided to use a dedicated VPS to host my mail server. The first thing I had to setup is the hostname: <strong>mail.mydomain.app</strong></p>
 <p>On Ubuntu, we can use the <code>hostnamectl</code> utility to change the hostname if we created the VPS with a wrong one. </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl <span class="built_in">set</span>-hostname mail.mydomain.app</span><br></pre></td></tr></table></figure>
@@ -233,7 +233,7 @@
     Copyright &copy;
     
     
-    2019-2020
+    2019-2021
     Nicolas Anjoran
   </div>
   <div class="footer-right">
