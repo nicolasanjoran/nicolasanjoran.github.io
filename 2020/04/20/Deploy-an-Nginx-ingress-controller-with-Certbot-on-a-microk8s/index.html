@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Sorry, what? microK8s, Ingress, cert-manager? 🤔DisclaimerI won’t explain every detail in this article, it’s mainly for my own note taking. If you read this article, I suppose you already know how to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MicroK8s - Setup an nginx ingress with cert-manager">
+<meta property="og:url" content="https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/index.html">
+<meta property="og:site_name" content="Nicolas Anjoran">
+<meta property="og:description" content="Sorry, what? microK8s, Ingress, cert-manager? 🤔DisclaimerI won’t explain every detail in this article, it’s mainly for my own note taking. If you read this article, I suppose you already know how to">
+<meta property="og:locale">
+<meta property="og:image" content="https://www.vultr.com/media/banners/banner_728x90.png">
+<meta property="article:published_time" content="2020-04-20T12:17:33.000Z">
+<meta property="article:modified_time" content="2020-04-26T10:02:25.000Z">
+<meta property="article:author" content="Nicolas Anjoran">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="microK8s">
+<meta property="article:tag" content="ingress">
+<meta property="article:tag" content="https">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.vultr.com/media/banners/banner_728x90.png">
+<meta name="twitter:creator" content="@nicolasanjoran">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>MicroK8s - Setup an nginx ingress with cert-manager</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Nicolas Anjoran" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/04/21/MicroK8s-Mount-host-directory-into-pods/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/07/25/markdown-blog-1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&text=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&is_video=false&description=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MicroK8s - Setup an nginx ingress with cert-manager&body=Check out this article: https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&name=MicroK8s - Setup an nginx ingress with cert-manager&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&t=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sorry-what-microK8s-Ingress-cert-manager-%F0%9F%A4%94"><span class="toc-number">1.</span> <span class="toc-text">Sorry, what? microK8s, Ingress, cert-manager? 🤔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Disclaimer"><span class="toc-number">1.1.</span> <span class="toc-text">Disclaimer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-I-use-Kubernetes"><span class="toc-number">1.2.</span> <span class="toc-text">Why I use Kubernetes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-I-decided-to-try-MicroK8s"><span class="toc-number">1.3.</span> <span class="toc-text">Why I decided to try MicroK8s</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ingress-and-cert-manager"><span class="toc-number">1.4.</span> <span class="toc-text">Ingress and cert-manager</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-up-MicroK8s"><span class="toc-number">2.</span> <span class="toc-text">Setting up MicroK8s</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-MicroK8s-with-snap"><span class="toc-number">2.1.</span> <span class="toc-text">Install MicroK8s with snap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optional-get-remote-access-via-a-SSH-tunnel"><span class="toc-number">2.2.</span> <span class="toc-text">Optional: get remote access via a SSH tunnel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optional-2-get-remote-access-without-a-SSH-tunnel"><span class="toc-number">2.3.</span> <span class="toc-text">Optional (2): get remote access without a SSH tunnel</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test-deployment"><span class="toc-number">3.</span> <span class="toc-text">Test deployment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ingress"><span class="toc-number">4.</span> <span class="toc-text">Ingress</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cert-manager"><span class="toc-number">5.</span> <span class="toc-text">Cert-manager</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Setup-your-DNS"><span class="toc-number">5.1.</span> <span class="toc-text">Setup your DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-cert-manager"><span class="toc-number">5.2.</span> <span class="toc-text">Install cert-manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-a-staging-and-prod-issuer"><span class="toc-number">5.3.</span> <span class="toc-text">Deploy a staging and prod issuer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setup-the-ingress-to-work-with-cert-manager"><span class="toc-number">6.</span> <span class="toc-text">Setup the ingress to work with cert-manager</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MicroK8s - Setup an nginx ingress with cert-manager
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Nicolas Anjoran</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-20T12:17:33.000Z" itemprop="datePublished">2020-04-20</time>
+        
+        (Updated: <time datetime="2020-04-26T10:02:25.000Z" itemprop="dateModified">2020-04-26</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Backend/">Backend</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/https/" rel="tag">https</a>, <a class="tag-link-link" href="/tags/ingress/" rel="tag">ingress</a>, <a class="tag-link-link" href="/tags/kubernetes/" rel="tag">kubernetes</a>, <a class="tag-link-link" href="/tags/microK8s/" rel="tag">microK8s</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Sorry-what-microK8s-Ingress-cert-manager-🤔"><a href="#Sorry-what-microK8s-Ingress-cert-manager-🤔" class="headerlink" title="Sorry, what? microK8s, Ingress, cert-manager? 🤔"></a>Sorry, what? microK8s, Ingress, cert-manager? 🤔</h2><h3 id="Disclaimer"><a href="#Disclaimer" class="headerlink" title="Disclaimer"></a>Disclaimer</h3><p>I won’t explain every detail in this article, it’s mainly for my own note taking. If you read this article, I suppose you already know how to setup your DNS, setup some basic HTTP routes, deploy some deployments, services on a K8s cluster.</p>
+<h3 id="Why-I-use-Kubernetes"><a href="#Why-I-use-Kubernetes" class="headerlink" title="Why I use Kubernetes"></a>Why I use Kubernetes</h3><p>Kubernetes (K8s) is a container orchestration tool, many cloud providers like Google, Amazon, DigitalOcean have their own proprietary implementation of Kubernetes and allow you to setup a Kubernetes cluster with a few clicks. A Kubernetes cluster offers many advantages, some of them target big companies or critical apps with High Availability, Replication, and so on. For my own projects, I’m more interested in using a tool that allows me to automatically orchestrate my own containers and automate their deployment.</p>
+<h3 id="Why-I-decided-to-try-MicroK8s"><a href="#Why-I-decided-to-try-MicroK8s" class="headerlink" title="Why I decided to try MicroK8s"></a>Why I decided to try <a target="_blank" rel="noopener" href="https://microk8s.io">MicroK8s</a></h3><p>I tried the cloud solutions, and loved them. One day, I had to update my cluster with the update process of DigitalOcean (automatic) and… BOOM 💥 all of my sites went down, the load balancer was down. I had to setup the load balancer again and I wasn’t happy with the idea of paying for the High Availability stuff, which wasn’t highly available AT ALL.</p>
+<p>I found an article about MicroK8s: a lightweight K8s implementation that you can install almost anywhere. Ok, it means you need to install it and you don’t have the master node that comes for free. BUT, you can install it anywhere, and to be honest, I don’t think I need all of the DigitalOcean High Availability promises for my small apps.</p>
+<p>So, I decided to try managing my own kubernetes cluster on a <a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=8553262">Vultr VPS instance</a>. Their servers have better performances for the same price and people say their support is great (compared to the bad support at DO).</p>
+<p><a target="_blank" rel="noopener" href="https://www.vultr.com/?ref=8553262"><img src="https://www.vultr.com/media/banners/banner_728x90.png" width="728" height="90"></a></p>
+<h3 id="Ingress-and-cert-manager"><a href="#Ingress-and-cert-manager" class="headerlink" title="Ingress and cert-manager"></a>Ingress and cert-manager</h3><p>An ingress controller lets you route your URLs to different services in your kubernetes cluster. It generally sits behind a Load Balancer (which sometimes manages your SSL certificates). In this article, I’ll install MicroK8s with some services and route some urls to them. I’ll use Cert-manager to manage the SSL certificate (with let’s encrypt).</p>
+<h2 id="Setting-up-MicroK8s"><a href="#Setting-up-MicroK8s" class="headerlink" title="Setting up MicroK8s"></a>Setting up MicroK8s</h2><h3 id="Install-MicroK8s-with-snap"><a href="#Install-MicroK8s-with-snap" class="headerlink" title="Install MicroK8s with snap"></a>Install MicroK8s with snap</h3><p>The instructions are available from the official website: <a target="_blank" rel="noopener" href="https://microk8s.io/#get-started">https://microk8s.io/#get-started</a></p>
+<p>I’ll use the guide for Ubuntu as I’m installing it on fresh new DigitalOcean droplet.</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo snap install microk8s --classic --channel=1.18/stable</span><br><span class="line">sudo microk8s status --wait-ready</span><br></pre></td></tr></table></figure>
+
+<h3 id="Optional-get-remote-access-via-a-SSH-tunnel"><a href="#Optional-get-remote-access-via-a-SSH-tunnel" class="headerlink" title="Optional: get remote access via a SSH tunnel"></a>Optional: get remote access via a SSH tunnel</h3><figure class="highlight bash"><figcaption><span>SERVER</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Export the custom config</span></span><br><span class="line">sudo microk8s kubectl config view --raw &gt; <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><figcaption><span>YOUR MACHINE</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set a variable to your server IP</span></span><br><span class="line">SERVERIP=xxx.xxx.xxx.xxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy the ~/.kube/config from the Server to your machine</span></span><br><span class="line">scp root@<span class="variable">$SERVERIP</span>:~/.kube/config ~/.kube/config</span><br><span class="line"></span><br><span class="line"><span class="comment"># Open an SSH tunnel (everytime you need to use kubectl)</span></span><br><span class="line">ssh -N -L localhost:16443:localhost:16443 root@<span class="variable">$SERVERIP</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Optional-2-get-remote-access-without-a-SSH-tunnel"><a href="#Optional-2-get-remote-access-without-a-SSH-tunnel" class="headerlink" title="Optional (2): get remote access without a SSH tunnel"></a>Optional (2): get remote access without a SSH tunnel</h3><p><strong><em>⚠️ This method exposes the <code>16443</code> API port to the web, you might not want to expose it for production use cases ⚠️</em></strong></p>
+<figure class="highlight bash"><figcaption><span>SERVER</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Export the custom config</span></span><br><span class="line">sudo ufw allow 16443</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><figcaption><span>YOUR MACHINE</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set a variable to your server IP</span></span><br><span class="line">SERVERIP=xxx.xxx.xxx.xxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy the ~/.kube/config from the Server to your machine</span></span><br><span class="line">scp root@<span class="variable">$SERVERIP</span>:~/.kube/config ~/.kube/config</span><br><span class="line">sed -ie <span class="string">&quot;s/127.0.0.1/<span class="variable">$SERVERIP</span>/g&quot;</span> ~/.kube/config</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Test-deployment"><a href="#Test-deployment" class="headerlink" title="Test deployment"></a>Test deployment</h2><p>For the purpose of this article, I’ll deploy a basic nginx deployment and expose it.<br>I’ll also create another deployment/service called <strong><em>hello-deployment</em></strong> with the same method.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://k8s.io/examples/application/deployment.yaml</span><br><span class="line">kubectl expose deployment nginx-deployment --port 80</span><br></pre></td></tr></table></figure>
+
+<p>Then type <code>kubectl get all</code> should display the following status:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NAME                                    READY   STATUS    RESTARTS   AGE</span><br><span class="line">pod/nginx-deployment-6b474476c4-8vr85   1/1     Running   0          3m2s</span><br><span class="line">pod/nginx-deployment-6b474476c4-skf77   1/1     Running   0          3m2s</span><br><span class="line"></span><br><span class="line">NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE</span><br><span class="line">service/kubernetes         ClusterIP   10.152.183.1     &lt;none&gt;        443/TCP   6m53s</span><br><span class="line">service/nginx-deployment   ClusterIP   10.152.183.136   &lt;none&gt;        80/TCP    15s</span><br><span class="line"></span><br><span class="line">NAME                               READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">deployment.apps/nginx-deployment   2/2     2            2           3m2s</span><br><span class="line"></span><br><span class="line">NAME                                          DESIRED   CURRENT   READY   AGE</span><br><span class="line">replicaset.apps/nginx-deployment-6b474476c4   2         2         2       3m2s</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ingress"><a href="#Ingress" class="headerlink" title="Ingress"></a>Ingress</h2><p>Installing an nginx ingress controller with microK8s is easy, just type the following command to enable the corresponding plugin:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">microk8s.enable ingress</span><br></pre></td></tr></table></figure>
+
+<p>Then type <code>kubectl get all --namespace ingress</code> should return the following status, with a new daemonset and pod for the ingress controller.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NAME                                          READY   STATUS    RESTARTS   AGE</span><br><span class="line">pod/nginx-ingress-microk8s-controller-rjh6b   1/1     Running   0          9m22s</span><br><span class="line"></span><br><span class="line">NAME                                               DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE</span><br><span class="line">daemonset.apps/nginx-ingress-microk8s-controller   1         1         1       1            1           &lt;none&gt;          9m22s</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Now, let’s create a basic ingress definition, this will route ilightshow.app/ to the nginx-deployment, and route ilightshow.app/hello to the hello-deployment. Please note that you need to setup your DNS records for your domain name.</p>
+<figure class="highlight yaml"><figcaption><span>ingress.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">default-ingress</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">tls:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">hosts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ilightshow.app</span></span><br><span class="line">    <span class="attr">secretName:</span> <span class="string">default-tls-secret</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">ilightshow.app</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">nginx-deployment</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">80</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/hello</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">hello-deployment</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Cert-manager"><a href="#Cert-manager" class="headerlink" title="Cert-manager"></a>Cert-manager</h2><h3 id="Setup-your-DNS"><a href="#Setup-your-DNS" class="headerlink" title="Setup your DNS"></a>Setup your DNS</h3><p>Don’t forget to setup the DNS record for your domain name, it needs to point to your server, otherwise, you won’t be able to reach the deployments by typing the URL (for me: <a target="_blank" rel="noopener" href="http://ilightshow.app">http://ilightshow.app</a>). AND, the Let’s Encrypt servers won’t be able to reach the cert-manager challenge (If you don’t understand this, please read <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/an-introduction-to-let-s-encrypt">this article</a>).</p>
+<h3 id="Install-cert-manager"><a href="#Install-cert-manager" class="headerlink" title="Install cert-manager"></a>Install cert-manager</h3><p>First, run <code>microk8s.inspect</code> on the server, make sure you don’t have any warning. For instance, I had the following warning: </p>
+<blockquote>
+<p>WARNING:  IPtables FORWARD policy is DROP. Consider enabling traffic forwarding with: sudo iptables -P FORWARD ACCEPT</p>
+</blockquote>
+<p>This part is based from this <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes">tutorial</a>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a new namespace for the cert-manager</span></span><br><span class="line">kubectl create namespace cert-manager</span><br><span class="line"></span><br><span class="line"><span class="comment"># Apply the official yaml file (change the version to the latest release)</span></span><br><span class="line">kubectl apply --validate=<span class="literal">false</span> -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager.yaml</span><br></pre></td></tr></table></figure>
+
+<h3 id="Deploy-a-staging-and-prod-issuer"><a href="#Deploy-a-staging-and-prod-issuer" class="headerlink" title="Deploy a staging and prod issuer"></a>Deploy a staging and prod issuer</h3><p>Create the following files and apply them with <code>kubectl apply -f</code></p>
+<figure class="highlight yaml"><figcaption><span>staging-issuer.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">cert-manager.io/v1alpha2</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterIssuer</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"> <span class="attr">name:</span> <span class="string">letsencrypt-staging</span></span><br><span class="line"> <span class="attr">namespace:</span> <span class="string">cert-manager</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"> <span class="attr">acme:</span></span><br><span class="line">   <span class="comment"># The ACME server URL</span></span><br><span class="line">   <span class="attr">server:</span> <span class="string">https://acme-staging-v02.api.letsencrypt.org/directory</span></span><br><span class="line">   <span class="comment"># Email address used for ACME registration</span></span><br><span class="line">   <span class="attr">email:</span> <span class="string">&lt;your-email-here&gt;</span></span><br><span class="line">   <span class="comment"># Name of a secret used to store the ACME account private key</span></span><br><span class="line">   <span class="attr">privateKeySecretRef:</span></span><br><span class="line">     <span class="attr">name:</span> <span class="string">letsencrypt-staging</span></span><br><span class="line">   <span class="comment"># Enable the HTTP-01 challenge provider</span></span><br><span class="line">   <span class="attr">solvers:</span></span><br><span class="line">   <span class="bullet">-</span> <span class="attr">http01:</span></span><br><span class="line">       <span class="attr">ingress:</span></span><br><span class="line">         <span class="attr">class:</span>  <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><figcaption><span>production-issuer.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">cert-manager.io/v1alpha2</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterIssuer</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">letsencrypt-prod</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">cert-manager</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">acme:</span></span><br><span class="line">    <span class="comment"># The ACME server URL</span></span><br><span class="line">    <span class="attr">server:</span> <span class="string">https://acme-v02.api.letsencrypt.org/directory</span></span><br><span class="line">    <span class="comment"># Email address used for ACME registration</span></span><br><span class="line">    <span class="attr">email:</span> <span class="string">&lt;your-email-here&gt;</span></span><br><span class="line">    <span class="comment"># Name of a secret used to store the ACME account private key</span></span><br><span class="line">    <span class="attr">privateKeySecretRef:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">letsencrypt-prod</span></span><br><span class="line">    <span class="comment"># Enable the HTTP-01 challenge provider</span></span><br><span class="line">    <span class="attr">solvers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">http01:</span></span><br><span class="line">        <span class="attr">ingress:</span></span><br><span class="line">          <span class="attr">class:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Setup-the-ingress-to-work-with-cert-manager"><a href="#Setup-the-ingress-to-work-with-cert-manager" class="headerlink" title="Setup the ingress to work with cert-manager"></a>Setup the ingress to work with cert-manager</h2><p>Just add the following annotations, it will ask the cluster-issuer to issue a certificate.</p>
+<figure class="highlight yaml"><figcaption><span>ingress.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">default-ingress</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add the following line (staging first for testing, then apply the prod issuer)</span></span><br><span class="line">    <span class="attr">cert-manager.io/cluster-issuer:</span> <span class="string">&quot;letsencrypt-staging&quot;</span> <span class="comment"># &quot;letsencrypt-prod&quot; </span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">tls:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">hosts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ilightshow.app</span></span><br><span class="line">    <span class="attr">secretName:</span> <span class="string">default-tls-secret</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">ilightshow.app</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">nginx-deployment</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">80</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/hello</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">hello-deployment</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>Then, check that the certificate is ready with <code>kubectl get certificate</code>. If everything worked fine, you can change the issuer to the <code>prod</code> issuer.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sorry-what-microK8s-Ingress-cert-manager-%F0%9F%A4%94"><span class="toc-number">1.</span> <span class="toc-text">Sorry, what? microK8s, Ingress, cert-manager? 🤔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Disclaimer"><span class="toc-number">1.1.</span> <span class="toc-text">Disclaimer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-I-use-Kubernetes"><span class="toc-number">1.2.</span> <span class="toc-text">Why I use Kubernetes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-I-decided-to-try-MicroK8s"><span class="toc-number">1.3.</span> <span class="toc-text">Why I decided to try MicroK8s</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ingress-and-cert-manager"><span class="toc-number">1.4.</span> <span class="toc-text">Ingress and cert-manager</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-up-MicroK8s"><span class="toc-number">2.</span> <span class="toc-text">Setting up MicroK8s</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-MicroK8s-with-snap"><span class="toc-number">2.1.</span> <span class="toc-text">Install MicroK8s with snap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optional-get-remote-access-via-a-SSH-tunnel"><span class="toc-number">2.2.</span> <span class="toc-text">Optional: get remote access via a SSH tunnel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optional-2-get-remote-access-without-a-SSH-tunnel"><span class="toc-number">2.3.</span> <span class="toc-text">Optional (2): get remote access without a SSH tunnel</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Test-deployment"><span class="toc-number">3.</span> <span class="toc-text">Test deployment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ingress"><span class="toc-number">4.</span> <span class="toc-text">Ingress</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cert-manager"><span class="toc-number">5.</span> <span class="toc-text">Cert-manager</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Setup-your-DNS"><span class="toc-number">5.1.</span> <span class="toc-text">Setup your DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-cert-manager"><span class="toc-number">5.2.</span> <span class="toc-text">Install cert-manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-a-staging-and-prod-issuer"><span class="toc-number">5.3.</span> <span class="toc-text">Deploy a staging and prod issuer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setup-the-ingress-to-work-with-cert-manager"><span class="toc-number">6.</span> <span class="toc-text">Setup the ingress to work with cert-manager</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&text=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&is_video=false&description=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MicroK8s - Setup an nginx ingress with cert-manager&body=Check out this article: https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&title=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&name=MicroK8s - Setup an nginx ingress with cert-manager&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nanjoran.com/2020/04/20/Deploy-an-Nginx-ingress-controller-with-Certbot-on-a-microk8s/&t=MicroK8s - Setup an nginx ingress with cert-manager"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2022
+    Nicolas Anjoran
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-77123980-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

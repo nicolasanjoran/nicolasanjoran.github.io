@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Context: Why not use Wake on Lan?I have a PC that I mainly use to run heavy jobs, like machine learning tasks, or heavy processing tasks. For some reason, it sometimes crashes and I can’t restart it r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build a smart switch for a remote PC">
+<meta property="og:url" content="https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/index.html">
+<meta property="og:site_name" content="Nicolas Anjoran">
+<meta property="og:description" content="Context: Why not use Wake on Lan?I have a PC that I mainly use to run heavy jobs, like machine learning tasks, or heavy processing tasks. For some reason, it sometimes crashes and I can’t restart it r">
+<meta property="og:locale">
+<meta property="og:image" content="https://nanjoran.com/images/posts/smart-switch-pc/power-header.jpg">
+<meta property="og:image" content="https://nanjoran.com/images/posts/smart-switch-pc/wiring.jpeg">
+<meta property="og:image" content="https://nanjoran.com/images/posts/smart-switch-pc/results.jpg">
+<meta property="article:published_time" content="2022-06-05T17:08:59.000Z">
+<meta property="article:modified_time" content="2022-06-05T18:03:37.546Z">
+<meta property="article:author" content="Nicolas Anjoran">
+<meta property="article:tag" content="arduino">
+<meta property="article:tag" content="diy">
+<meta property="article:tag" content="electronics">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nanjoran.com/images/posts/smart-switch-pc/power-header.jpg">
+<meta name="twitter:creator" content="@nicolasanjoran">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Build a smart switch for a remote PC</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Nicolas Anjoran" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/09/06/Email-server-setup/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&text=Build a smart switch for a remote PC"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&is_video=false&description=Build a smart switch for a remote PC"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Build a smart switch for a remote PC&body=Check out this article: https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&name=Build a smart switch for a remote PC&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&t=Build a smart switch for a remote PC"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Context-Why-not-use-Wake-on-Lan"><span class="toc-number">1.</span> <span class="toc-text">Context: Why not use Wake on Lan?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-solution-ESP8266"><span class="toc-number">2.</span> <span class="toc-text">The solution: ESP8266</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Let%E2%80%99s-build-it"><span class="toc-number">3.</span> <span class="toc-text">Let’s build it</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Software"><span class="toc-number">4.</span> <span class="toc-text">Software</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Power-On"><span class="toc-number">4.1.</span> <span class="toc-text">Power On</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Power-Off"><span class="toc-number">4.2.</span> <span class="toc-text">Power Off</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Restart"><span class="toc-number">4.3.</span> <span class="toc-text">Restart</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-code"><span class="toc-number">4.4.</span> <span class="toc-text">The code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Results"><span class="toc-number">5.</span> <span class="toc-text">Results</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Build a smart switch for a remote PC
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Nicolas Anjoran</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-06-05T17:08:59.000Z" itemprop="datePublished">2022-06-05</time>
+        
+        (Updated: <time datetime="2022-06-05T18:03:37.546Z" itemprop="dateModified">2022-06-05</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/arduino/">arduino</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/arduino/" rel="tag">arduino</a>, <a class="tag-link-link" href="/tags/diy/" rel="tag">diy</a>, <a class="tag-link-link" href="/tags/electronics/" rel="tag">electronics</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Context-Why-not-use-Wake-on-Lan"><a href="#Context-Why-not-use-Wake-on-Lan" class="headerlink" title="Context: Why not use Wake on Lan?"></a>Context: Why not use Wake on Lan?</h1><p>I have a PC that I mainly use to run heavy jobs, like machine learning tasks, or heavy processing tasks. For some reason, it sometimes crashes and I can’t restart it remotely. I can’t debug this crash easily as the screen shows a black screen after the crash. And to be honest, after several hours trying to figure it out, I don’t have time for this.</p>
+<p>So, the solution is simple: I don’t care if the PC crashes. I just want to be able to hard reboot it, but remotely, just like if I pressed the power switch for 5s.</p>
+<h1 id="The-solution-ESP8266"><a href="#The-solution-ESP8266" class="headerlink" title="The solution: ESP8266"></a>The solution: ESP8266</h1><p>PC motherboards have a connector for the front panel, which has multiple pins. Two of those pins are for the power switch, another 2 are for the reset switch.</p>
+<p><img src="/images/posts/smart-switch-pc/power-header.jpg" alt="Power switch header" title="Power switch header"></p>
+<p>The idea is to build a small smart device, that can simulate a button press (or hold) instead of doing it manually. I have some ESP8266 devices lying around, which are perfect for this job: low-power, small, a lot of GPIOs and easily programmable with the Arduino platform.</p>
+<h1 id="Let’s-build-it"><a href="#Let’s-build-it" class="headerlink" title="Let’s build it"></a>Let’s build it</h1><p>The power switch is just a Normally Open switch, which connects the two pins while pressed. You can’t connect direcly the GPIOs of the ESP8266 to the power switch pins of the MB header, the voltage on those pins are generally powered with a voltage of 5V, the ESP8266 is 3V, and the goal here is to let the current pass through the pins. An idea would be to use a Solid State Relay, but you can’t power it from an ESP3266 and it’s way overkill for this job. A better idea is to use an optocoupler like the PC817 to act as a switch.</p>
+<p>Here is the schematic I designed:</p>
+<p><img src="/images/posts/smart-switch-pc/wiring.jpeg" alt="Schematic" title="Schematic"></p>
+<p>Good news is, I can still use the physical switch, it’s just like if there were two switches instead of a single one.</p>
+<p>Here is how it looks like in my PC, it’s not pretty as I only did the wiring on a protoboard for now, but it works, and I even have placed the ESP8266 (Node-MCU) USB port at the back of the PC Case, like all other ports.</p>
+<p><img src="/images/posts/smart-switch-pc/results.jpg" alt="Smart power switch" title="Smart power switch"></p>
+<h1 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h1><p>The Arduino program will be an embedded web server, with 3 urls: power_on, power_off and restart. This allows me to control it easily, using a web browser, an iOS Shortcut or whatever I like to automate the process.</p>
+<h2 id="Power-On"><a href="#Power-On" class="headerlink" title="Power On"></a>Power On</h2><p>The /power_on command simulates a 500ms press on the switch</p>
+<h2 id="Power-Off"><a href="#Power-Off" class="headerlink" title="Power Off"></a>Power Off</h2><p>The /power_off command simulates a 6s press on the switch</p>
+<h2 id="Restart"><a href="#Restart" class="headerlink" title="Restart"></a>Restart</h2><p>The /restart command simulates both a power_off command, waits for a second and then simulates a power_on command.</p>
+<h2 id="The-code"><a href="#The-code" class="headerlink" title="The code"></a>The code</h2><script src="https://gist.github.com/nicolasanjoran/830ab2778a40273fffa9c56296c39af0.js"></script>
+
+<h1 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h1><p>Because I also have a home VPN, I can now access my computer remotely, but also power it on and off at will. This is not only useful when the PC crashes, but it also allows me to save money by turning it on without having to rely on the Wake On LAN feature! </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Context-Why-not-use-Wake-on-Lan"><span class="toc-number">1.</span> <span class="toc-text">Context: Why not use Wake on Lan?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-solution-ESP8266"><span class="toc-number">2.</span> <span class="toc-text">The solution: ESP8266</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Let%E2%80%99s-build-it"><span class="toc-number">3.</span> <span class="toc-text">Let’s build it</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Software"><span class="toc-number">4.</span> <span class="toc-text">Software</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Power-On"><span class="toc-number">4.1.</span> <span class="toc-text">Power On</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Power-Off"><span class="toc-number">4.2.</span> <span class="toc-text">Power Off</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Restart"><span class="toc-number">4.3.</span> <span class="toc-text">Restart</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-code"><span class="toc-number">4.4.</span> <span class="toc-text">The code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Results"><span class="toc-number">5.</span> <span class="toc-text">Results</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&text=Build a smart switch for a remote PC"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&is_video=false&description=Build a smart switch for a remote PC"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Build a smart switch for a remote PC&body=Check out this article: https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&title=Build a smart switch for a remote PC"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&name=Build a smart switch for a remote PC&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nanjoran.com/2022/06/05/Build-a-smart-switch-for-a-remote-PC/&t=Build a smart switch for a remote PC"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2022
+    Nicolas Anjoran
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-77123980-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
